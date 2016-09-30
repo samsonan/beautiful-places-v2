@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<places p_name="First Place" lat="102.123456" lon="-102.123456" />
+	<places p_name="~*[];'{}()?.," lat="-0.654321" lon="0.123456" />
+</dataset>
