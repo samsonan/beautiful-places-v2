@@ -4,8 +4,9 @@
 	<title>Beautiful Places</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	
-		<!-- Bootstrap -->
+	<!-- Bootstrap -->
     <link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link th:href="@{/webjars/font-awesome/4.6.3/css/font-awesome.min.css}" href="/webjars/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -14,6 +15,7 @@
     <![endif]-->
 	
     <link th:href="@{/resources/css/map.css}" href="/resources/css/map.css" rel="stylesheet" />
+    <link th:href="@{/resources/css/gmaps-sidebar.css}" href="/resources/css/gmaps-sidebar.css" rel="stylesheet" />
     
 </head>
 <body>
@@ -21,6 +23,38 @@
 	<div th:include="fragments/header :: header"></div>
 
     <div class="container">
+
+
+	    <div id="sidebar" class="sidebar collapsed">
+	        <!-- Nav tabs -->
+	        <div class="sidebar-tabs">
+	            <ul role="tablist">
+	                <li><a href="#filter" role="tab"><i class="fa fa-filter"></i></a></li>
+	                <li><a href="#info" role="tab"><i class="fa fa-info"></i></a></li>
+	            </ul>
+	        </div>
+	
+	        <!-- Tab panes -->
+	        <div class="sidebar-content">
+	            <div class="sidebar-pane" id="filter">
+	                <h1 class="sidebar-header">
+	                    Filters
+	                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+	                </h1>
+	
+	                <p></p>
+	
+	            </div>
+	
+	            <div class="sidebar-pane" id="info">
+	                <h1 class="sidebar-header">Place Info<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+	                <p></p>
+	                <div id="placeInfoContent"><p>Select any place on the map!</p></div>
+	            </div>
+	
+	        </div>
+	    </div>
+
 
 		<div id="map-canvas"></div>
 
@@ -30,9 +64,18 @@
 
     <script th:src="@{/resources/js/map.js}" src="/resources/js/map.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script th:src="@{/resources/js/jquery-sidebar.js}" src="/resources/js/jquery-sidebar.js"></script>
+
+	<script>
+
+		var sidebar = $('#sidebar').sidebar();
+	
+	</script>
+
 
 </body>
 </html>

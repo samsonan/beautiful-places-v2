@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset reset_sequences="place_id_sec">
+	<places p_name="First Place" description="description" lat="102.123456" lon="-102.123456" />
+	<places p_name="~*[];'{}()?.," description="description" lat="-0.654321" lon="0.123456" />
+	<places p_name="Just Added" description="New Description" lat="-0.654321" lon="0.123456" />
+</dataset>

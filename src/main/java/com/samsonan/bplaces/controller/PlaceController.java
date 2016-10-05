@@ -43,7 +43,6 @@ public class PlaceController {
         return "errors/404";
     }   
     
-    
     //------------------- Retrieve All Places--------------------------------------------------------
     @RequestMapping(value = "/api/places/", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<Place>> findAllPlaces() {

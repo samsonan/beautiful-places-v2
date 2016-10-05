@@ -1,0 +1,27 @@
+hr {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.content-container {
+	margin-top: 50px; 
+}
+
+.login-container {
+	margin-top: 70px; 
+}
+
+.checkbox {
+	margin-top:0px;
+}
+
+.login-input-group {
+	margin-top: 15px
+}
+
+.login-hint-group {
+	font-size: 85%; 
+	padding-top:10px;
+}
+
+
