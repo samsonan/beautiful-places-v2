@@ -26,6 +26,7 @@ public class HibernatePlaceDao implements PlaceDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<Place> findAll() {
+        
         Session currentSession = sessionFactory.getCurrentSession();  
         
         Query query = currentSession.createQuery("from Place");
@@ -33,4 +34,43 @@ public class HibernatePlaceDao implements PlaceDao {
         return query.list();
     }
 
+    @Override
+    public Place findById(int id) {
+
+        Session currentSession = sessionFactory.getCurrentSession();  
+        
+        return currentSession.get(Place.class, id);
+    }
+
+    @Override
+    public void saveOrUpdate(Place place) {
+
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        if (place.getId() != null) {
+            currentSession.merge(place);
+        } else {
+            currentSession.persist(place);
+        }
+
+    }
+
+    @Override
+    public void deleteById(int id) {
+
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        Place place = currentSession.get(Place.class, id);
+        
+        currentSession.delete(place);
+    }
+
+    @Override
+    public void delete(Place place) {
+
+        Session currentSession = sessionFactory.getCurrentSession();
+        
+        currentSession.delete(place);
+    }    
+    
 }

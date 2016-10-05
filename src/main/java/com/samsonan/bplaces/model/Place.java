@@ -6,7 +6,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 
 @Entity
 @Table(name="places")
@@ -14,16 +21,24 @@ public class Place {
 
     @Id 
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @NotNull
+    @NotEmpty
     @Column(name="p_name")
     private String name;
     
+    @NotEmpty
+    @Column(name="description")
+    private String description;
+    
+    @Min(-90)
+    @Max(90)
     @Column(name="lat")
     private double latitude;
 
+    @Min(-180)
+    @Max(180)
     @Column(name="lon")
     private double longitude;
 
@@ -52,6 +67,14 @@ public class Place {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public double getLatitude() {
         return latitude;
     }
@@ -67,7 +90,31 @@ public class Place {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+      
     
+    @Override
+    public String toString(){
+        return MoreObjects.toStringHelper(this)
+           .add("name", name)
+           .add("description", description)
+           .add("latitude", latitude)
+           .add("longitude", longitude)
+           .toString();
+    }    
     
+    //TODO: add additional attributes to compare
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        final Place other = (Place) obj;
+        return Objects.equal(this.name, other.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.name);
+    }
     
 }

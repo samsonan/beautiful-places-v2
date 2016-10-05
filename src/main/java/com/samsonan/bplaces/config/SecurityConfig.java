@@ -7,32 +7,48 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private UserDetailsService userService;
+    
+    @Autowired
+    public SecurityConfig(UserDetailsService userService){
+        this.userService = userService;
+    }
+    
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService);       
+    }
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+            .csrf().disable()   //TODO: enable later
             .authorizeRequests()
                 .antMatchers("/", "/map").permitAll()
                 .antMatchers("/resources/**", "/webjars/**").permitAll()
-                .antMatchers("/places/").permitAll()
+                .antMatchers("/places/add").access("hasRole('ADMIN')")
+                .antMatchers("/places/list").access("hasRole('ADMIN')")
+                .antMatchers("/places/**/edit").access("hasRole('ADMIN')")
+                .antMatchers("/places/**/delete").access("hasRole('ADMIN')")
+                .antMatchers("/places/**").permitAll()
+                .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .and()
+            .rememberMe()
+                .tokenValiditySeconds(1209600)
+                .and()
             .logout()
                 .permitAll();
     }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
-    }    
     
 }

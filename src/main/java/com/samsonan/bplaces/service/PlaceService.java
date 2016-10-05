@@ -22,4 +22,21 @@ public class PlaceService {
         return placeRepository.findAll(); 
     }
 
+    public Place findPlaceById(int id) {
+        return placeRepository.findById(id);
+    }
+
+    public void savePlace(Place place) {
+        placeRepository.saveOrUpdate(place);        
+    }
+
+    public void deletePlaceById(int id) {
+        placeRepository.deleteById(id);        
+    }
+
+    public void deletePlace(Place place) {
+        placeRepository.delete(place);        
+    }
+    
+    
 }
