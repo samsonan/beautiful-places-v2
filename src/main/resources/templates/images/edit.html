@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <title>Image Upload</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<!-- Bootstrap -->
+	<link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+	<link th:href="@{/resources/css/plugins/img-upload/bootstrap-imageupload.css}" href="/resources/css/plugins/img-upload/bootstrap-imageupload.css" rel="stylesheet" />
+
+        <style>
+            body {
+                padding-top: 70px;
+            }
+
+            .imageupload {
+                margin: 20px 0;
+            }
+        </style>
+
+    </head>
+    <body>
+
+
+	<div th:include="fragments/header :: header"></div>
+
+        <div class="container content-container">
+        
+		<form method="POST"  th:object="${imageForm}"
+			enctype="multipart/form-data" class="form-horizontal">
+        
+        
+            <p>A Bootstrap/jQuery plugin to preview image uploads.</p>
+            <div class="imageupload panel panel-default">
+                <div class="panel-heading clearfix">
+                    <h3 class="panel-title pull-left">Upload Image</h3>
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default active">File</button>
+                        <button type="button" class="btn btn-default">URL</button>
+                    </div>
+                </div>
+                <div class="file-tab panel-body">
+                    <label class="btn btn-default btn-file">
+                        <span>Browse</span>
+                        <!-- The file is stored here. -->
+                        <input type="file" name="image-file" th:field="*{file}"/>
+                    </label>
+                    <button type="button" class="btn btn-default">Remove</button>
+                </div>
+                <div class="url-tab panel-body">
+                    <div class="input-group">
+                        <input type="text" class="form-control hasclear" placeholder="Image URL"/>
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default">Remove</button>
+                    <!-- The URL is stored here. -->
+                    <input type="hidden" name="image-url"/>
+                </div>
+            </div>
+
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="title">Name<span class="required">*</span></label>
+							<div class="col-sm-10">
+    	                        <input name="title" id="title" type="text" class="form-control" placeholder="Title" th:field="*{title}"/>
+								<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger">Title Error</span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="description">Description<span class="required">*</span></label>
+							<div class="col-sm-10">
+								<textarea name="description" id="description" class="form-control" rows="3" 
+									placeholder="Describe the Place"  th:field="*{description}"></textarea>
+								<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger">Description Error</span>
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<p class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-success"> Submit </button>
+                            	<a th:href="@{/places/list}" href="#" class="btne btn-default">Cancel</a>
+							</p>
+						</div>
+
+		</form>
+
+        </div>
+
+
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    	<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    	<script th:src="@{/resources/js/plugins/img-upload/bootstrap-imageupload.js}" src="/resources/js/plugins/img-upload/bootstrap-imageupload.js"></script>
+
+        <script>
+            var $imageupload = $('.imageupload');
+            $imageupload.imageupload();
+        </script>
+    </body>
+</html>

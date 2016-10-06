@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/places/**/edit").access("hasRole('ADMIN')")
                 .antMatchers("/places/**/delete").access("hasRole('ADMIN')")
                 .antMatchers("/places/**").permitAll()
+                .antMatchers("/images/**").permitAll()// TODO:test only
                 .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

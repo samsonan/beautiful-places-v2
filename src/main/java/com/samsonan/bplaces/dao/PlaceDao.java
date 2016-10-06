@@ -10,10 +10,12 @@ public interface PlaceDao {
 
     Place findById(int id);
 
-    void saveOrUpdate(Place place);
-
     void deleteById(int id);
 
     void delete(Place place);
+
+    void save(Place place);
+
+    void update(Place place);
     
 }

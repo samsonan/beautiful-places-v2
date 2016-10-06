@@ -27,7 +27,12 @@ public class PlaceService {
     }
 
     public void savePlace(Place place) {
-        placeRepository.saveOrUpdate(place);        
+
+        if (place.getId() != null) {
+            placeRepository.update(place);        
+        } else {
+            placeRepository.save(place);        
+        }
     }
 
     public void deletePlaceById(int id) {

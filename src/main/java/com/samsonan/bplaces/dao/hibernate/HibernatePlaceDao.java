@@ -43,18 +43,18 @@ public class HibernatePlaceDao implements PlaceDao {
     }
 
     @Override
-    public void saveOrUpdate(Place place) {
-
+    public void save(Place place) {
         Session currentSession = sessionFactory.getCurrentSession();
-
-        if (place.getId() != null) {
-            currentSession.merge(place);
-        } else {
-            currentSession.persist(place);
-        }
-
+        currentSession.persist(place);
     }
 
+    @Override
+    public void update(Place place) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.merge(place);
+    }
+    
+    
     @Override
     public void deleteById(int id) {
 

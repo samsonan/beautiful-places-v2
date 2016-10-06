@@ -20,8 +20,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource(value = { "classpath:application.properties" })
 public class HibernateConfig {
 
-    @Autowired
     private Environment environment;
+    
+    @Autowired
+    public HibernateConfig(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
