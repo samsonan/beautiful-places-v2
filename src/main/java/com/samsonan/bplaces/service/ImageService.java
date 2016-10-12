@@ -22,8 +22,12 @@ public class ImageService {
         return imageRepository.findAll(); 
     }
 
-    public Image findImageById(int id) {
-        return imageRepository.findById(id);
+    public List<Image> findAllImagesForPlace(int placeId) {
+        return imageRepository.findAllByPlaceId(placeId); 
+    }
+    
+    public Image findImageById(int placeId, int imageId) {
+        return imageRepository.findById(placeId, imageId);
     }
 
     public void saveImage(Image image) {
@@ -35,8 +39,8 @@ public class ImageService {
         }
     }
 
-    public void deleteImageById(int id) {
-        imageRepository.deleteById(id);        
+    public void deleteImageById(int placeId, int imageId) {
+        imageRepository.deleteById(placeId, imageId);        
     }
 
     public void deleteImage(Image image) {

@@ -8,14 +8,16 @@ public interface ImageDao {
 
     List<Image> findAll();
 
-    Image findById(int id);
+    Image findById(int placeId, int imageId);
 
-    void deleteById(int id);
+    void deleteById(int placeId, int imageId);
 
     void delete(Image image);
 
     void save(Image image);
 
     void update(Image image);
+
+    List<Image> findAllByPlaceId(int placeId);
     
 }

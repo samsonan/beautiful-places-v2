@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
+<head>
     <title>Image Upload</title>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -26,9 +26,9 @@
             }
         </style>
 
-    </head>
-    <body>
+</head>
 
+<body>
 
 	<div th:include="fragments/header :: header"></div>
 
@@ -37,27 +37,32 @@
 		<form method="POST"  th:object="${imageForm}"
 			enctype="multipart/form-data" class="form-horizontal">
         
+        	<span th:if="${#fields.hasErrors('file')}" th:errors="*{file}" class="text-danger">File Error</span>
         
-            <p>A Bootstrap/jQuery plugin to preview image uploads.</p>
             <div class="imageupload panel panel-default">
                 <div class="panel-heading clearfix">
                     <h3 class="panel-title pull-left">Upload Image</h3>
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-default active">File</button>
+                    	<button type="button" class="btn btn-default">Current Image</button>
+                        <button type="button" class="btn btn-default">File</button>
                         <button type="button" class="btn btn-default">URL</button>
                     </div>
+                </div>
+                <div class="img-tab panel-body" th:if="${imageForm.imagePath}">
+                   	<input type="hidden" name="imagePath" th:field="*{imagePath}"></input>
+                    <img name="imagePath" alt="" class="img-thumbnail" style="max-width:250px; max-height:250px" th:src="*{imagePath}"></img>
                 </div>
                 <div class="file-tab panel-body">
                     <label class="btn btn-default btn-file">
                         <span>Browse</span>
                         <!-- The file is stored here. -->
-                        <input type="file" name="image-file" th:field="*{file}"/>
+                        <input type="file" name="file" th:field="*{file}"/>
                     </label>
                     <button type="button" class="btn btn-default">Remove</button>
                 </div>
                 <div class="url-tab panel-body">
                     <div class="input-group">
-                        <input type="text" class="form-control hasclear" placeholder="Image URL"/>
+                        <input type="text" name="imageUrl" class="form-control hasclear" placeholder="Image URL" th:field="*{imageUrl}"/>
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-default">Submit</button>
                         </div>
@@ -89,7 +94,7 @@
 						<div class="form-group">
 							<p class="col-sm-offset-2 col-sm-10">
 								<button type="submit" class="btn btn-success"> Submit </button>
-                            	<a th:href="@{/places/list}" href="#" class="btne btn-default">Cancel</a>
+                            	<a th:href="@{/places/{place_id}/images/list(place_id=${placeId})}" href="#" class="btne btn-default">Cancel</a>
 							</p>
 						</div>
 
@@ -101,11 +106,15 @@
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     	<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+        <script th:inline="javascript">
+        	var $currentimage = [[${imageForm.imagePath}]];
+		</script>
+
     	<script th:src="@{/resources/js/plugins/img-upload/bootstrap-imageupload.js}" src="/resources/js/plugins/img-upload/bootstrap-imageupload.js"></script>
 
         <script>
             var $imageupload = $('.imageupload');
             $imageupload.imageupload();
         </script>
-    </body>
+</body>
 </html>

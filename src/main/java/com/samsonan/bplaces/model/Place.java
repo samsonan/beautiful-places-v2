@@ -1,10 +1,15 @@
 package com.samsonan.bplaces.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -42,6 +47,9 @@ public class Place {
     @Column(name="lon")
     private double longitude;
 
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images = new ArrayList<>();
+    
     public Place(){
     }
 
@@ -90,7 +98,16 @@ public class Place {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-      
+    
+    public void addImage(Image image) {
+        images.add( image );
+        image.setPlace( this );
+    }
+
+    public void removePhone(Image image) {
+        images.remove( image );
+        image.setPlace( null );
+    }    
     
     @Override
     public String toString(){
@@ -100,6 +117,7 @@ public class Place {
            .add("description", description)
            .add("latitude", latitude)
            .add("longitude", longitude)
+           .add("images", images)
            .toString();
     }    
     

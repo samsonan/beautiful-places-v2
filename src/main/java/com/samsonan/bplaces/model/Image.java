@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +24,7 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
+    //TODO: @NaturalId ??? 
     @NotNull
     @Column(name="filename")
     private String filename;
@@ -48,6 +50,9 @@ public class Image {
     @Column(name = "updated")
     private Date updated;
 
+    @ManyToOne
+    private Place place;
+    
     public Integer getId() {
         return id;
     }
@@ -112,6 +117,14 @@ public class Image {
         this.updated = updated;
     }
     
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
+    }
+
     @Override
     public String toString(){
         return MoreObjects.toStringHelper(this)

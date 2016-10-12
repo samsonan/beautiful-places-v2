@@ -42,7 +42,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
     TransactionalTestExecutionListener.class,
     DbUnitTestExecutionListener.class })
 @ActiveProfiles("test")
-public class ControllerTest {
+public class PlaceControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;    
@@ -67,7 +67,7 @@ public class ControllerTest {
     }
     
     @Test
-    @ExpectedDatabase(value = "/bplaces_init.xml", assertionMode = DatabaseAssertionMode.DEFAULT)        
+    @ExpectedDatabase(value = "/bplaces_init.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)        
     public void getAllPlaces() throws Exception {
         
         mockMvc.perform(get("/api/places/"))
@@ -83,7 +83,7 @@ public class ControllerTest {
     }
     
     @Test
-    @ExpectedDatabase(value = "/bplaces_init.xml", assertionMode = DatabaseAssertionMode.DEFAULT)        
+    @ExpectedDatabase(value = "/bplaces_init.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)        
     public void getPlaceById() throws Exception {
         mockMvc.perform(get("/api/places/1"))
         .andExpect(status().isOk())
@@ -102,7 +102,7 @@ public class ControllerTest {
     }
     
     @Test
-    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.DEFAULT)
+    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void addPlace_byAdmin_errors() throws Exception {
         
         mockMvc.perform(post("/places/add")
@@ -136,7 +136,7 @@ public class ControllerTest {
                 .andExpect(view().name("redirect:list"));
     }    
     
-    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.DEFAULT)
+    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void viewPlace_byAdmin_success() throws Exception {
         
         mockMvc.perform(get("/places/1/details")
@@ -147,7 +147,7 @@ public class ControllerTest {
     }
 
     @Test
-    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.DEFAULT)
+    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void viewPlace_byAdmin_error() throws Exception {
         
         mockMvc.perform(get("/places/1000/details")
@@ -158,7 +158,7 @@ public class ControllerTest {
     }      
     
     @Test
-    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.DEFAULT)
+    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void editPlace_byAdmin_error_vals() throws Exception {
         
         mockMvc.perform(post("/places/1/edit")
@@ -177,7 +177,7 @@ public class ControllerTest {
     }
     
     @Test
-    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.DEFAULT)
+    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void editPlace_byAdmin_error_notFound() throws Exception {
         
         mockMvc.perform(get("/places/100/edit")
@@ -208,7 +208,7 @@ public class ControllerTest {
     }   
     
     @Test
-    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.DEFAULT)
+    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void deletePlace_byAdmin_errors() throws Exception {
         
         mockMvc.perform(get("/places/100/delete")
@@ -235,10 +235,13 @@ public class ControllerTest {
                 
                 .andExpect(flash().attributeExists(PlaceController.FLASH_MSG_ATTR))
                 .andExpect(flash().attribute(PlaceController.FLASH_CSS_ATTR, PlaceController.FLASH_CSS_VALUE_OK));
+        
+        //TODO: check that places are deleted as well
+        
     }  
     
     @Test
-    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.DEFAULT)
+    @ExpectedDatabase(value="/bplaces_init.xml", assertionMode = DatabaseAssertionMode.NON_STRICT)
     public void adminAccessTest_fail() throws Exception{
         mockMvc.perform(get("/places/add")).andExpect(redirectedUrlPattern("**/login"));
         mockMvc.perform(get("/places/list")).andExpect(redirectedUrlPattern("**/login"));

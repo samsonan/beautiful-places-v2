@@ -28,28 +28,33 @@ public class HibernateImageDao implements ImageDao {
     public List<Image> findAll() {
         
         Session currentSession = sessionFactory.getCurrentSession();  
-        
         Query query = currentSession.createQuery("from Image");
-        
         return query.list();
     }
 
     @Override
-    public Image findById(int id) {
-        // TODO Auto-generated method stub
-        return null;
+    public Image findById(int placeId, int imageId) {
+        Session currentSession = sessionFactory.getCurrentSession();  
+        Query query = currentSession.createQuery("from Image where id= :imageId and place_id= :placeId")
+                .setInteger("imageId", imageId)
+                .setInteger("placeId", placeId);
+        return (Image) query.uniqueResult();
     }
 
     @Override
-    public void deleteById(int id) {
-        // TODO Auto-generated method stub
-
+    public void deleteById(int placeId, int imageId) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Image image = (Image) currentSession.createQuery("from Image where id= :imageId and place_id= :placeId")
+                .setInteger("imageId", imageId)
+                .setInteger("placeId", placeId).uniqueResult();
+        currentSession.delete(image);
     }
 
     @Override
     public void delete(Image image) {
-        // TODO Auto-generated method stub
 
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.delete(image);
     }
 
     @Override
@@ -62,6 +67,15 @@ public class HibernateImageDao implements ImageDao {
     public void update(Image image) {
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.merge(image);    
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Image> findAllByPlaceId(int placeId) {
+        Session currentSession = sessionFactory.getCurrentSession();  
+        Query query = currentSession.createQuery("from Image where place_id= :placeId").
+                setInteger("placeId", placeId);
+        return query.list();
     }
 
 }

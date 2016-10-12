@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset reset_sequences="places_id_sec, images_id_seq">
+
+	<images title="First Image Updated" description="description updated" content_type="image/jpeg" place_id="2"/>
+	<images title="Second Image" description="Descr 2" content_type="image/jpeg" place_id="2"/>
+</dataset>

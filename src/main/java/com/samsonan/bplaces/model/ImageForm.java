@@ -7,8 +7,9 @@ import com.google.common.base.MoreObjects;
 
 public class ImageForm {
  
-	private String imageSrc;
-    private String imageUrl;
+	private String imageUrl;
+	
+    private String imagePath;
 
 	private MultipartFile file;
 	
@@ -26,12 +27,12 @@ public class ImageForm {
         this.file = file;
     }
     
-    public String getImageUrl() {
-		return imageUrl;
+    public String getImagePath() {
+		return imagePath;
 	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public String getDescription() {
@@ -49,23 +50,23 @@ public class ImageForm {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-	public String getImageSrc() {
-		return imageSrc;
-	}
-
-	public void setEditImageSrc(String imageSrc) {
-		this.imageSrc = imageSrc;
-	}    
     
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public String toString(){
         return MoreObjects.toStringHelper(this)
            .add("title", title)
            .add("description", description)
-           .add("imageSrc", imageSrc)
            .add("imageUrl", imageUrl)
-           .add("file", file != null)
+           .add("imagePath", imagePath)
+           .add("file", file != null && !file.isEmpty())
            .toString();
     }   
 	

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataset reset_sequences="places_id_sec">
+<dataset reset_sequences="places_id_sec, images_id_seq">
 	<places id="1" p_name="First Place" description="description" lat="102.123456" lon="-102.123456" />
 	<places id="2" p_name="~*[];'{}()?.," description="description" lat="-0.654321" lon="0.123456" />
+
+	<images id="1" title="First Image" description="Descr 1" content_type="image/jpeg" filename="a941e809-4f78-41ff-9a87-b11e1d85af96" place_id="2"/>
+	<images id="2" title="Second Image" description="Descr 2" content_type="image/jpeg" filename="b941e809-4f78-41ff-9a87-b11e1d85af96" place_id="2"/>
 </dataset>

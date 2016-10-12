@@ -51,25 +51,42 @@ if (typeof jQuery === 'undefined') {
     // ==================================================
 
     function init(givenOptions) {
+    	
         options = $.extend({}, $.fn.imageupload.defaultOptions, givenOptions);
 
         var $imageupload = this;
+        
+        var $currImgTab = $imageupload.find('.img-tab');
+        var $currImgTabButton = $imageupload.find('.panel-heading .btn:eq(0)');
+        
         var $fileTab = $imageupload.find('.file-tab');
-        var $fileTabButton = $imageupload.find('.panel-heading .btn:eq(0)');
+        var $fileTabButton = $imageupload.find('.panel-heading .btn:eq(1)');
         var $browseFileButton = $fileTab.find('input[type="file"]');
         var $removeFileButton = $fileTab.find('.btn:eq(1)');
+        
         var $urlTab = $imageupload.find('.url-tab');
-        var $urlTabButton = $imageupload.find('.panel-heading .btn:eq(1)');
+        var $urlTabButton = $imageupload.find('.panel-heading .btn:eq(2)');
         var $submitUrlButton = $urlTab.find('.btn:eq(0)');
         var $removeUrlButton = $urlTab.find('.btn:eq(1)');
 
         // Do a complete reset.
+        resetCurrImgTab($currImgTab);
         resetFileTab($fileTab);
         resetUrlTab($urlTab);
-        showFileTab($fileTab);
+        
+        console.log('$currImgTab:'+$currImgTab+'; $fileTab:'+$fileTab);
+        
+        if ($currentimage != null) {
+        	showCurrImgTab($currImgTab);
+        } else {
+        	$currImgTabButton.hide();
+        	showFileTab($fileTab);
+        }
+        
         enable.call($imageupload);
         
         // Unbind all previous bound event handlers.
+        $currImgTabButton.off();
         $fileTabButton.off();
         $browseFileButton.off();
         $removeFileButton.off();
@@ -77,6 +94,11 @@ if (typeof jQuery === 'undefined') {
         $submitUrlButton.off();
         $removeUrlButton.off();
 
+        $currImgTabButton.on('click', function() {
+            $(this).blur();
+            showCurrImgTab($currImgTab);
+        });        
+        
         $fileTabButton.on('click', function() {
             $(this).blur();
             showFileTab($fileTab);
@@ -206,21 +228,53 @@ if (typeof jQuery === 'undefined') {
         }, timeoutMs);
     }
 
+    function showCurrImgTab($currImgTab) {
+        var $imageupload = $currImgTab.closest('.imageupload');
+        var $currImgTabButton = $imageupload.find('.panel-heading .btn:eq(0)');
+
+        if (!$currImgTabButton.hasClass('active')) {
+            var $urlTab = $imageupload.find('.url-tab');
+            var $fileTab = $imageupload.find('.file-tab');
+
+            // Change active tab button.
+            $imageupload.find('.panel-heading .btn:eq(1)').removeClass('active');
+            $imageupload.find('.panel-heading .btn:eq(2)').removeClass('active');
+            $currImgTabButton.addClass('active');
+
+            // Hide URL tab and show file tab.
+            $currImgTab.show()
+            
+            $urlTab.hide();
+            $fileTab.hide();
+            resetUrlTab($urlTab);
+            resetFileTab($fileTab);
+        }
+    }    
+    
+    function resetCurrImgTab($currImgTab) {
+    	//$currImgTab.find('img').remove();
+    }
+    
     function showFileTab($fileTab) {
         var $imageupload = $fileTab.closest('.imageupload');
-        var $fileTabButton = $imageupload.find('.panel-heading .btn:eq(0)');
+        var $fileTabButton = $imageupload.find('.panel-heading .btn:eq(1)');
 
         if (!$fileTabButton.hasClass('active')) {
+            var $currImgTab = $imageupload.find('.img-tab');
             var $urlTab = $imageupload.find('.url-tab');
 
             // Change active tab buttton.
-            $imageupload.find('.panel-heading .btn:eq(1)').removeClass('active');
+            $imageupload.find('.panel-heading .btn:eq(0)').removeClass('active');
+            $imageupload.find('.panel-heading .btn:eq(2)').removeClass('active');
             $fileTabButton.addClass('active');
 
             // Hide URL tab and show file tab.
-            $urlTab.hide();
             $fileTab.show();
+
+            $currImgTab.hide()
+            $urlTab.hide();
             resetUrlTab($urlTab);
+            resetCurrImgTab($currImgTab);
         }
     }
 
@@ -280,19 +334,24 @@ if (typeof jQuery === 'undefined') {
 
     function showUrlTab($urlTab) {
         var $imageupload = $urlTab.closest('.imageupload');
-        var $urlTabButton = $imageupload.find('.panel-heading .btn:eq(1)');
+        var $urlTabButton = $imageupload.find('.panel-heading .btn:eq(2)');
 
         if (!$urlTabButton.hasClass('active')) {
+            var $currImgTab = $imageupload.find('.img-tab');
             var $fileTab = $imageupload.find('.file-tab');
 
             // Change active tab button.
             $imageupload.find('.panel-heading .btn:eq(0)').removeClass('active');
+            $imageupload.find('.panel-heading .btn:eq(1)').removeClass('active');
             $urlTabButton.addClass('active');
 
             // Hide file tab and show URL tab.
-            $fileTab.hide();
             $urlTab.show();
+
+            $currImgTab.hide()
+            $fileTab.hide();
             resetFileTab($fileTab);
+            resetCurrImgTab($currImgTab);
         }
     }
 

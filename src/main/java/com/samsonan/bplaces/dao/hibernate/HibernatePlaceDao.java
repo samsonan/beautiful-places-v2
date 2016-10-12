@@ -36,9 +36,7 @@ public class HibernatePlaceDao implements PlaceDao {
 
     @Override
     public Place findById(int id) {
-
         Session currentSession = sessionFactory.getCurrentSession();  
-        
         return currentSession.get(Place.class, id);
     }
 

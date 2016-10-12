@@ -35,7 +35,7 @@
 
 		<h1>
 			All Images
-			<a class="btn btn-primary" href="#"	th:href="@{/images/add}">Add New Image</a>
+			<a class="btn btn-primary" href="#"	th:href="@{/places/{place_id}/images/add(place_id=${placeId})}">Add New Image</a>
 		</h1>
 		
 		<hr/>
@@ -56,16 +56,16 @@
 
 			<tr th:each="image : ${images}">
 				<td th:text="${image.id}">Id</td>
-				<td><img class="img-thumbnail" th:src="${links.get(image.id)}" /></td>
+				<td><img class="img-thumbnail" style="max-width:250px; max-height:250px" th:src="${links.get(image.id)}" /></td>
 				<td>
 					<strong th:text="${image.title}">Title</strong>
 					<p th:text="${image.description}">Description</p>
 				</td>
 				<td>
 						<a class="btn btn-primary" href="#"
-							th:href="@{/images/{id}/edit(id=${image.id})}">Update</a>
+							th:href="@{/places/{place_id}/images/{id}/edit(id=${image.id}, place_id=${placeId})}">Update</a>
 						<a class="btn btn-danger" href="#"
-							th:href="@{/images/{id}/delete(id=${image.id})}">Delete</a>
+							th:href="@{/places/{place_id}/images/{id}/delete(id=${image.id}, place_id=${placeId})}">Delete</a>
 				</td>
 			</tr>
 		</table>
