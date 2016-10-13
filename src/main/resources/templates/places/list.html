@@ -43,30 +43,38 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>#ID</th>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Coordinates</th>
-					<th>Action</th>
+					<th class="col-xs-3"></th>
+					<th class="col-xs-8"></th>
+					<th class="col-xs-1">Action</th>
 				</tr>
 			</thead>
 			
 		    <tr th:if="${places.empty}">
-		        <td colspan="5">No places</td>
+		        <td colspan="3">No places</td>
 		    </tr>
 
 			<tr th:each="place : ${places}">
-				<td th:text="${place.id}">Id</td>
-				<td><a th:text="${place.name}" th:href="@{/places/{id}/details(id=${place.id})}" href="#"></a></td>
-				<td th:text="${place.description}">Description</td>
-				<td>(<span th:text="${place.latitude}"></span> ; <span th:text="${place.longitude}"></span>)</td>
+				<td><img class="img-thumbnail" style="max-width:250px; max-height:250px" src="" /></td>
+				<td th:inline="text">
+					<strong th:inline="text">[ID = [[${place.id}]]]
+						<a th:text="${place.name}" th:href="@{/places/{id}/details(id=${place.id})}" href="#"></a>
+					</strong>
+					<p>
+						<span class="glyphicon glyphicon-globe"></span> 
+						[[${place.latitude}]], [[${place.longitude}]]
+					</p>
+					
+					<p th:text="${place.description}">Description</p>
+				</td>
 				<td>
+					<div class="btn-group-vertical pull-right">
 						<a class="btn btn-primary" href="#"
 							th:href="@{/places/{id}/edit(id=${place.id})}">Update</a>
 						<a class="btn btn-primary" href="#"
 							th:href="@{/places/{id}/images/list(id=${place.id})}">Images</a>
 						<a class="btn btn-danger" href="#"
 							th:href="@{/places/{id}/delete(id=${place.id})}">Delete</a>
+					</div>
 				</td>
 			</tr>
 		</table>

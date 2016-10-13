@@ -33,9 +33,9 @@
 		</div>
 
 
-		<h1>
-			All Images
-			<a class="btn btn-primary" href="#"	th:href="@{/places/{place_id}/images/add(place_id=${placeId})}">Add New Image</a>
+		<h1 th:inline="text">
+			Images of [[${place.name}]]
+			<a class="btn btn-primary" href="#"	th:href="@{/places/{place_id}/images/add(place_id=${place.id})}">Add New Image</a>
 		</h1>
 		
 		<hr/>
@@ -43,29 +43,30 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>#ID</th>
-					<th>Image</th>
-					<th>Information</th>
-					<th>Action</th>
+					<th class="col-xs-3">Image</th>
+					<th class="col-xs-8"></th>
+					<th class="col-xs-1">Action</th>
 				</tr>
 			</thead>
 			
 		    <tr th:if="${images.empty}">
-		        <td colspan="4">No images</td>
+		        <td colspan="3">No images</td>
 		    </tr>
 
 			<tr th:each="image : ${images}">
-				<td th:text="${image.id}">Id</td>
 				<td><img class="img-thumbnail" style="max-width:250px; max-height:250px" th:src="${links.get(image.id)}" /></td>
 				<td>
+					<strong th:inline="text">[ID = [[${image.id}]]] </strong>
 					<strong th:text="${image.title}">Title</strong>
 					<p th:text="${image.description}">Description</p>
 				</td>
 				<td>
+					<div class="btn-group-vertical pull-right">
 						<a class="btn btn-primary" href="#"
 							th:href="@{/places/{place_id}/images/{id}/edit(id=${image.id}, place_id=${placeId})}">Update</a>
 						<a class="btn btn-danger" href="#"
 							th:href="@{/places/{place_id}/images/{id}/delete(id=${image.id}, place_id=${placeId})}">Delete</a>
+					</div>
 				</td>
 			</tr>
 		</table>

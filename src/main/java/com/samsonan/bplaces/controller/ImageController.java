@@ -60,13 +60,11 @@ public class ImageController {
         this.placeService = placeService;
         this.formValidator = formValidator;
     }
-
  
     @InitBinder("imageForm")
     protected void initBinderImageForm(WebDataBinder binder) {
         binder.setValidator(formValidator);
     }
-
     
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -115,8 +113,6 @@ public class ImageController {
 
             Place place = placeService.findPlaceById(placeId);// TODO: check if exists
             image.setPlace(place);
-
-            log.debug("Image stored. {}", image);
 
         } catch (Exception e) {
             log.error("Error while saving the file to the storage", e);
@@ -181,7 +177,6 @@ public class ImageController {
             
                 image.setContentType(file.getContentType());
                 image.setUpdated(new Date());
-            
                 image.setFilename(path);
             
                 log.debug("Image stored. {}", image);
@@ -203,9 +198,10 @@ public class ImageController {
             Model model) {
 
         List<Image> images = imageService.findAllImagesForPlace(placeId);
-        model.addAttribute("images", images);
-
-        model.addAttribute("placeId", placeId);
+        Place place = placeService.findPlaceById(placeId);
+        
+        model.addAttribute("images", images); //TODO: ?! they should be in place entity!
+        model.addAttribute("place", place);
         
         Map<Integer, Object> links = new HashMap<>();
         

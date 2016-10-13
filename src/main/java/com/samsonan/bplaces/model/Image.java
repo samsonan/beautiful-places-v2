@@ -50,6 +50,17 @@ public class Image {
     @Column(name = "updated")
     private Date updated;
 
+    public int getOrdenal() {
+        return ordenal;
+    }
+
+    public void setOrdenal(int ordenal) {
+        this.ordenal = ordenal;
+    }
+
+    @Column(name = "ordenal")
+    private int ordenal;
+    
     @ManyToOne
     private Place place;
     

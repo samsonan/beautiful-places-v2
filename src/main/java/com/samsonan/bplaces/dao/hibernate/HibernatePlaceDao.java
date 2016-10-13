@@ -28,9 +28,7 @@ public class HibernatePlaceDao implements PlaceDao {
     public List<Place> findAll() {
         
         Session currentSession = sessionFactory.getCurrentSession();  
-        
-        Query query = currentSession.createQuery("from Place");
-        
+        Query query = currentSession.createQuery("from Place p left join p.images img with img.ordenal=0");
         return query.list();
     }
 
